@@ -1,0 +1,23 @@
+Important :
+
+The previous functional requirements are retained as mentioned in previous assignment 1 (Which was submitted alongside other previous assignment)
+
+-Change :
+
+-Removed Login features and functionalities as they were redundant to operability of given web application
+
+-Corresponding changes are to be reflected across all prior project documentation submitted.
+
+Brief explaination of working of Web Application : 
+
+This is a Python Flask web application that uses a trained machine learning model to predict the flight price based on user input. The machine learning model is trained on a dataset of flight prices and related information. The web application provides an interface for the user to input information about the flight, such as the departure date and time, arrival date and time, airline, number of stops, and source and destination locations.
+
+The application uses the Python Flask framework to handle the web application logic, including the request routing and HTML template rendering. The Flask-CORS library is used to enable cross-origin resource sharing, which allows the web application to be hosted on a different domain than the machine learning model.
+
+The machine learning model is loaded from a pickle file using the pickle.load method. The application uses the pyodbc library to connect to a SQL Server database and retrieve information about the flight, such as the source and destination locations.
+
+After receiving the user input, the application processes the input data and converts it into a format that can be used by the machine learning model. This includes parsing the input date and time strings and extracting the day and month of the journey, as well as the departure and arrival hours and minutes. The application also converts the number of stops into an integer.
+
+The application then uses the user input to create a one-hot encoding of the airline feature, which is used by the machine learning model. The encoded feature is passed to the machine learning model, which returns a predicted flight price.
+
+The predicted flight price is then displayed to the user on a web page rendered using an HTML template. The user can input new flight information and get a new prediction by refreshing the page or submitting the form again

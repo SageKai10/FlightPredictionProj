@@ -1,18 +1,37 @@
+#Import required libraries
+
 from flask import Flask, request, render_template
 from flask_cors import cross_origin
 import sklearn
 import pickle
 import pandas as pd
+import pyodbc
 
+#Create a Flask web application instance
 
 app = Flask(__name__)
+
+#Load the saved machine learning model using pickle
+
 model = pickle.load(open("c1_flight_rf.pkl", "rb"))
 
+#Create a connection to SQL Server database
+
+connection = pyodbc.connect('Driver={SQL Server};'
+                            'Server=SAGE_KAI\DSQL;'
+                            'Database=FPW;'
+                            'Trusted_Connection=yes;')
+
+cursor = connection.cursor()
+
+#Define a route for the home page
 
 @app.route("/")
 @cross_origin()
 def home():
     return render_template("home.html")
+
+#Define a route for handling flight fare prediction requests
 
 @app.route("/predict", methods = ["GET", "POST"])
 @cross_origin()
@@ -222,14 +241,15 @@ def predict():
         ]])
 
         output=round(prediction[0],2)
-
+#This line returns the rendered template 'home.html' with the predicted flight price displayed as a message
         return render_template('home.html',prediction_text="Your Flight price is Rs. {}".format(output))
 
-
+#This line is executed if the previous return statement is not executed, It simply returns the 'home.html' template without any message
     return render_template("home.html")
 
 
-
+# This block of code is executed only if the current file is run directly (not imported)
+# It starts the Flask application and sets it to run in debug mode
 
 if __name__ == "__main__":
     app.run(debug=True)
